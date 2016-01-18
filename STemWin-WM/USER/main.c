@@ -12,6 +12,7 @@
 #include "includes.h"
 #include "math.h"
 #include "bitmap.h"
+#include "WM.h"
 
 //ALIENTEK Mini STM32开发板范例代码27
 //内存管理实验  
@@ -69,11 +70,62 @@ void main_ui(void)
 	GUI_DrawRoundedRect(0,0,200,200,5);
 	GUI_DrawRoundedFrame(2,2,180,20,5,2);
 }
+static void _cbwindow(WM_MESSAGE *pMsg)//窗口回调函数
+{
+	GUI_RECT Rect;
+	static u16 i = 0;
 
+	
+	switch(pMsg->MsgId){
+		case WM_PAINT:
+				i++;
+			WM_GetInsideRect(&Rect);
+			GUI_SetColor(GUI_YELLOW);
+			GUI_SetBkColor(GUI_RED);
+		  GUI_ClearRectEx(&Rect);
+			GUI_DrawRectEx(&Rect);
+			GUI_SetColor(GUI_BLACK);
+			GUI_SetFont(&GUI_Font8x16);
+//			GUI_DispStringHCenterAt("Foreground window", 120, 0);
+		GUI_DispDec(i,3);
+		break;
+		default:
+			WM_DefaultProc(pMsg);
+	}
+}
+static void _cbhkwindow(WM_MESSAGE *pMsg)
+{
+	switch(pMsg->MsgId){
+		case WM_PAINT:
+		  GUI_Clear();
+		default:
+			WM_DefaultProc(pMsg);
+	}
+}
+void _Draw_WM(void)
+{
+	u8 i;
+	WM_HWIN hwin;
+	
+	WM_SetCreateFlags(WM_CF_MEMDEV);
+	WM_EnableMemdev(WM_HBKWIN); 
+	
+	hwin = WM_CreateWindow(10,10,100,60,WM_CF_SHOW,_cbwindow,0);//创建一个窗口，并指定回调函数
+	WM_SetCallback(WM_HBKWIN,_cbhkwindow);//设定背景窗口的回调函数，以便于移动窗口时清除背景
+	GUI_Delay(100);
+	
+	for(i = 0;i<40;i++){
+		WM_MoveWindow(hwin,2,4);
+		GUI_Delay(2000);
+	}
+	WM_DeleteWindow(hwin);//删除窗口
+	WM_InvalidateWindow(WM_HBKWIN);//无效化指定窗口
+	GUI_Exec();//执行重绘
+}
 int main(void)
 {
 	BSP_Init();
-//	main_ui();
+	
 
 
 	OSInit();
@@ -113,6 +165,7 @@ void emwin_demo_task(void *pdata)
 	while(1)
 	{
 //		GUIDEMO_Main();
-		OSTimeDlyHMSM(0,0,0,10);
+		_Draw_WM();
+		OSTimeDlyHMSM(0,0,0,1000);
 	}
 }
