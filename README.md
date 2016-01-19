@@ -10,4 +10,4 @@ window set callback
 window delete
 
 attention:
-in the function(_changeInfoText).when define a var which type is WM_MESSAGE,must ust var, It will be go Hardfault if define a point var.
+in the function(_changeInfoText).when define a var which type is WM_MESSAGE,must use var, It will be go Hardfault if define a point var.
