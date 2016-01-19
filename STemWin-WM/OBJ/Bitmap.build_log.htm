@@ -8,14 +8,11 @@ Project File Date:  01/19/2016
 
 <h2>Output:</h2>
 Build target 'STemWin'
-compiling sample.c...
-..\EMWIN\sample.h(12): warning:  #1-D: last line of file ends without a newline
-  #endif
-..\EMWIN\sample.c: 1 warning, 0 errors
+compiling FramewinDLG.c...
 linking...
-Program Size: Code=110558 RO-data=18178 RW-data=1276 ZI-data=41988  
+Program Size: Code=154918 RO-data=21418 RW-data=3364 ZI-data=42012  
 FromELF: creating hex file...
-"..\OBJ\Bitmap.axf" - 0 Error(s), 1 Warning(s).
+"..\OBJ\Bitmap.axf" - 0 Error(s), 0 Warning(s).
 Load "..\\OBJ\\Bitmap.axf" 
 Set JLink Project File to "G:\GitHub\STemWin-WM\STemWin-WM\USER\JLinkSettings.ini"
 * JLink Info: Device "STM32F103RC" selected (256 KB flash, 48 KB RAM).
@@ -51,9 +48,25 @@ Erase Done.
 Programming Done.
 Verify OK.
 Application running ...
-fig\LCDConf.h(51): warning:  #47-D: incompatible redefinition of macro "LCD_CONTROLLER" (declared at line 50)
-  #define LCD_CONTROLLER     LCD_CONTROLLER_1
-..\EMWIN\STemWin\Config\GUIDRV_Template.c: 2 warnings, 0 errors
+M fitted.
+ROMTableAddr = 0xE00FF003
+ 
+Target info:
+------------
+Device: STM32F103RC
+VTarget = 3.306V
+State of Pins: 
+TCK: 0, TDI: 1, TDO: 1, TMS: 1, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 4000 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+
 compiling LCDConf_FlexColor_Template.c...
 ..\EMWIN\STemWin\Config\LCDConf_FlexColor_Template.c(154): warning:  #223-D: function "LCD_RD_DATA" declared implicitly
                 *pData++ = LCD_RD_DATA();
@@ -80,7 +93,7 @@ compiling os_tmr.c...
 compiling os_cpu_c.c...
 assembling os_cpu_a.asm...
 linking...
-Program Size: Code=110562 RO-data=18178 RW-data=1276 ZI-data=41988  
+Program Size: Code=110642 RO-data=18178 RW-data=1276 ZI-data=41988  
 FromELF: creating hex file...
 "..\OBJ\Bitmap.axf" - 0 Error(s), 7 Warning(s).
 Load "..\\OBJ\\Bitmap.axf" 
@@ -114,39 +127,53 @@ Software-Breakpoints: 8192
 Watchpoints:          4
 JTAG speed: 4000 kHz
  
+***JLink Error: Can not read register 0 (R0) while CPU is running
+***JLink Error: Can not read register 1 (R1) while CPU is running
+***JLink Error: Can not read register 2 (R2) while CPU is running
+***JLink Error: Can not read register 3 (R3) while CPU is running
+***JLink Error: Can not read register 4 (R4) while CPU is running
+***JLink Error: Can not read register 5 (R5) while CPU is running
+***JLink Error: Can not read register 6 (R6) while CPU is running
+***JLink Error: Can not read register 7 (R7) while CPU is running
+***JLink Error: Can not read register 8 (R8) while CPU is running
+***JLink Error: Can not read register 9 (R9) while CPU is running
+***JLink Error: Can not read register 10 (R10) while CPU is running
 Erase Done.
 Programming Done.
 Verify OK.
 Application running ...
-MWIN\STemWin\Config\GUI_X_Touch_Analog.c: 1 warning, 0 errors
-compiling GUI_Get_touch_phy_pos.c...
-compiling os_core.c...
-compiling os_flag.c...
-compiling os_mbox.c...
-compiling os_mem.c...
-compiling os_mutex.c...
-compiling os_q.c...
-compiling os_sem.c...
-compiling os_task.c...
-compiling os_time.c...
-compiling os_tmr.c...
-compiling os_cpu_c.c...
-linking...
-..\OBJ\Bitmap.axf: Error: L6218E: Undefined symbol _DemoBringToBottom (referred from main.o).
-..\OBJ\Bitmap.axf: Error: L6218E: Undefined symbol _DemoBringToTop (referred from main.o).
-..\OBJ\Bitmap.axf: Error: L6218E: Undefined symbol _DemoClipWindowChild (referred from main.o).
-..\OBJ\Bitmap.axf: Error: L6218E: Undefined symbol _DemoCreateWindow (referred from main.o).
-..\OBJ\Bitmap.axf: Error: L6218E: Undefined symbol _DemoCreateWindowAsChild (referred from main.o).
-..\OBJ\Bitmap.axf: Error: L6218E: Undefined symbol _DemoDeleteWindow (referred from main.o).
-..\OBJ\Bitmap.axf: Error: L6218E: Undefined symbol _DemoHideAndShowWindowChild (referred from main.o).
-..\OBJ\Bitmap.axf: Error: L6218E: Undefined symbol _DemoHideAndShowWindowParent (referred from main.o).
-..\OBJ\Bitmap.axf: Error: L6218E: Undefined symbol _DemoInvalidateWindow (referred from main.o).
-..\OBJ\Bitmap.axf: Error: L6218E: Undefined symbol _DemoMoveTo (referred from main.o).
-..\OBJ\Bitmap.axf: Error: L6218E: Undefined symbol _DemoMoveWindow (referred from main.o).
-..\OBJ\Bitmap.axf: Error: L6218E: Undefined symbol _DemoResizeWindow (referred from main.o).
-..\OBJ\Bitmap.axf: Error: L6218E: Undefined symbol _DemoSetDesktopColor (referred from main.o).
-..\OBJ\Bitmap.axf: Error: L6218E: Undefined symbol _DemoSetDesktopWindowCallback (referred from main.o).
-Not enough information to list image symbols.
-Finished: 1 information, 0 warning and 14 error messages.
-"..\OBJ\Bitmap.axf" - 14 Error(s), 20 Warning(s).
-Target not created
+Load "..\\OBJ\\Bitmap.axf" 
+Set JLink Project File to "G:\GitHub\STemWin-WM\STemWin-WM\USER\JLinkSettings.ini"
+* JLink Info: Device "STM32F103RC" selected (256 KB flash, 48 KB RAM).
+ 
+JLink info:
+------------
+DLL: V4.80g, compiled Feb 13 2014 20:50:02
+Firmware: J-Link ARM V8 compiled Nov 25 2013 19:20:08
+Hardware: V8.00
+S/N : 17935099 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash 
+ 
+* JLink Info: Found SWD-DP with ID 0x1BA01477
+* JLink Info: Found SWD-DP with ID 0x1BA01477
+* JLink Info: Found Cortex-M3 r1p1, Little endian.
+* JLink Info: FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+ROMTableAddr = 0xE00FF003
+ 
+Target info:
+------------
+Device: STM32F103RC
+VTarget = 3.306V
+State of Pins: 
+TCK: 0, TDI: 1, TDO: 1, TMS: 1, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 4000 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...

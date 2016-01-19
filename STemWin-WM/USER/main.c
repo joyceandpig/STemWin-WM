@@ -14,6 +14,7 @@
 #include "bitmap.h"
 #include "WM.h"
 #include "sample.h"
+#include "framewin.h"
 
 //ALIENTEK Mini STM32开发板范例代码27
 //内存管理实验  
@@ -111,11 +112,12 @@ void touch_task(void *pdata)
 }
 void emwin_demo_task(void *pdata)
 {
-
+	
+	CreateFramewin();
 	while(1)
 	{
 //		GUIDEMO_Main();
-			_Draw_Clip_Window();
+//			_Draw_Clip_Window();
 		OSTimeDlyHMSM(0,0,0,1000);
 	}
 }

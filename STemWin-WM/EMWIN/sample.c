@@ -94,7 +94,7 @@ static void _cbFrameWin2(WM_MESSAGE* pMsg) {
 	switch(pMsg->MsgId) {
 		case WM_PAINT:
 			GUI_SetBkColor(_aColors[_PaintCount2 % 6]);
-			GUI_Clear();
+			GUI_Clear();//清除当前窗口
 			GUI_SetColor(0x00FFC0);
 			GUI_FillCircle(25, 25, 15);
 			GUI_SetColor(GUI_BLACK);
@@ -111,29 +111,31 @@ void _Draw_Clip_Window(void)
 	WM_HWIN hwin0,hwin1,hwin2;
 	WM_HWIN hFrame1,hFrame2;
 	WM_HWIN hClient1,hClient2;
+	
+	
 		
-	WM_SetCallback(WM_HBKWIN,_cbBkWin);
-	hFrame1 = FRAMEWIN_CreateEx(10,30,140,140,0,WM_CF_SHOW,FRAMEWIN_CF_MOVEABLE,0,"Early Cliping",_cbFrameWin1);
-	hFrame2 = FRAMEWIN_CreateEx(170,30,140,140,0,WM_CF_SHOW,FRAMEWIN_CF_MOVEABLE,0,"Late Cliping",_cbFrameWin2);
+	WM_SetCallback(WM_HBKWIN,_cbBkWin);GUI_Delay(50);
+	hFrame1 = FRAMEWIN_CreateEx(10,30,140,140,0,WM_CF_SHOW,FRAMEWIN_CF_MOVEABLE,0,"Early Cliping",_cbFrameWin1);GUI_Delay(50);
+	hFrame2 = FRAMEWIN_CreateEx(170,30,140,140,0,WM_CF_SHOW,FRAMEWIN_CF_MOVEABLE,0,"Late Cliping",_cbFrameWin2);GUI_Delay(50);
 	
-	hClient1 = WM_GetClientWindow(hFrame1);//获取客户端窗口的句柄
-	hClient2 = WM_GetClientWindow(hFrame2);
+	hClient1 = WM_GetClientWindow(hFrame1);GUI_Delay(50);//获取客户端窗口的句柄
+	hClient2 = WM_GetClientWindow(hFrame2);GUI_Delay(50);
 	
-	_hWin1 = WM_CreateWindowAsChild(0,0,WM_GetWindowSizeX(hClient1),WM_GetWindowSizeY(hClient1),hClient1,WM_CF_SHOW,_cbFrameWin1,0);
-	_hWin2 = WM_CreateWindowAsChild(0,0,WM_GetWindowSizeX(hClient2),WM_GetWindowSizeY(hClient2),hClient2,WM_CF_SHOW,_cbFrameWin2,0);
+	_hWin1 = WM_CreateWindowAsChild(0,0,WM_GetWindowSizeX(hClient1),WM_GetWindowSizeY(hClient1),hClient1,WM_CF_SHOW,_cbFrameWin1,0);GUI_Delay(50);
+	_hWin2 = WM_CreateWindowAsChild(0,0,WM_GetWindowSizeX(hClient2),WM_GetWindowSizeY(hClient2),hClient2,WM_CF_SHOW,_cbFrameWin2,0);GUI_Delay(50);
 	
-	_hBut1   = BUTTON_CreateEx(10,210,140,20,0,WM_CF_SHOW,0,1);//id:按钮按下时返回的值
-	_hBut2   = BUTTON_CreateEx(170, 210, 140, 20, 0, WM_CF_SHOW, 0, 2);
+	_hBut1   = BUTTON_CreateEx(10,210,140,20,0,WM_CF_SHOW,0,1);GUI_Delay(50);//id:按钮按下时返回的值
+	_hBut2   = BUTTON_CreateEx(170, 210, 140, 20, 0, WM_CF_SHOW, 0, 2);GUI_Delay(50);
 	
-	hwin0    = FRAMEWIN_CreateEx( 60,  80, 40, 40, 0, WM_CF_SHOW | WM_CF_STAYONTOP, FRAMEWIN_CF_MOVEABLE, 0, "Top 0", _cbTop);
-  hwin1    = FRAMEWIN_CreateEx(220,  80, 40, 40, 0, WM_CF_SHOW | WM_CF_STAYONTOP, FRAMEWIN_CF_MOVEABLE, 0, "Top 1", _cbTop);
-  hwin2    = FRAMEWIN_CreateEx(140, 170, 40, 40, 0, WM_CF_SHOW | WM_CF_STAYONTOP, FRAMEWIN_CF_MOVEABLE, 0, "Top 2", _cbTop);
+	hwin0    = FRAMEWIN_CreateEx( 60,  80, 40, 40, 0, WM_CF_SHOW | WM_CF_STAYONTOP, FRAMEWIN_CF_MOVEABLE, 0, "Top 0", _cbTop);GUI_Delay(50);
+  hwin1    = FRAMEWIN_CreateEx(220,  80, 40, 40, 0, WM_CF_SHOW | WM_CF_STAYONTOP, FRAMEWIN_CF_MOVEABLE, 0, "Top 1", _cbTop);GUI_Delay(50);
+  hwin2    = FRAMEWIN_CreateEx(140, 170, 40, 40, 0, WM_CF_SHOW | WM_CF_STAYONTOP, FRAMEWIN_CF_MOVEABLE, 0, "Top 2", _cbTop);GUI_Delay(50);
 	
   FRAMEWIN_SetResizeable(hwin0, 1);//将窗口设置为可缩放状态，即可以通过拉伸窗口边沿放大窗口,1为可缩放，0为不可缩放
   FRAMEWIN_SetResizeable(hwin1, 1);
   FRAMEWIN_SetResizeable(hwin2, 1);
-  BUTTON_SetText(_hBut1, "Invalidate");//在按钮上显示文本
-  BUTTON_SetText(_hBut2, "Reset counters");
+  BUTTON_SetText(_hBut1, "Invalidate");GUI_Delay(50);//在按钮上显示文本
+  BUTTON_SetText(_hBut2, "Reset counters");GUI_Delay(50);
   while(1) {
     GUI_Delay(50);
   }
