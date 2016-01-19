@@ -36,6 +36,7 @@
 "..\obj\lcdconf_flexcolor_template.o"
 "..\obj\gui_x_touch_analog.o"
 "..\obj\gui_get_touch_phy_pos.o"
+"..\obj\sample.o"
 "..\EMWIN\STemWin\Lib\STemWin526_CM3_OS_Keil.lib"
 "..\obj\os_core.o"
 "..\obj\os_flag.o"

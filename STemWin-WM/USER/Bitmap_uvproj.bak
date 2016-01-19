@@ -364,7 +364,7 @@
               <MiscControls></MiscControls>
               <Define>STM32F10X_HD,USE_STDPERIPH_DRIVER</Define>
               <Undefine></Undefine>
-              <IncludePath>..\HARDWARE\LED;..\SYSTEM\delay;..\SYSTEM\sys;..\SYSTEM\usart;..\USER;..\FWLIB\STM32F10x_FWLib\inc;..\CORE;..\HARDWARE\LCD;..\HARDWARE\KEY;..\MALLOC;..\USMART;..\EMWIN\STemWin\Config;..\EMWIN\STemWin\inc;..\EMWIN\Demo;..\HARDWARE\24CXX;..\HARDWARE\IIC;..\HARDWARE\TOUCH;..\UCOSII\CONFIG;..\UCOSII\CORE;..\UCOSII\PORT;..\EMWIN\STemWin\OS;..\HARDWARE\BITMAP;..\EMWIN</IncludePath>
+              <IncludePath>..\HARDWARE\LED;..\SYSTEM\delay;..\SYSTEM\sys;..\SYSTEM\usart;..\USER;..\FWLIB\STM32F10x_FWLib\inc;..\CORE;..\HARDWARE\LCD;..\HARDWARE\KEY;..\MALLOC;..\USMART;..\EMWIN\STemWin\Config;..\EMWIN\STemWin\inc;..\EMWIN\Demo;..\HARDWARE\24CXX;..\HARDWARE\IIC;..\HARDWARE\TOUCH;..\UCOSII\CONFIG;..\UCOSII\CORE;..\UCOSII\PORT;..\EMWIN\STemWin\OS;..\HARDWARE\BITMAP</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -631,11 +631,6 @@
               <FileName>GUI_Get_touch_phy_pos.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\EMWIN\STemWin\Config\GUI_Get_touch_phy_pos.c</FilePath>
-            </File>
-            <File>
-              <FileName>sample.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\EMWIN\sample.c</FilePath>
             </File>
           </Files>
         </Group>

@@ -42,3 +42,4 @@
 ..\obj\main.o: ..\HARDWARE\BITMAP\bitmap.h
 ..\obj\main.o: ..\EMWIN\STemWin\inc\WM.h
 ..\obj\main.o: ..\EMWIN\STemWin\inc\WM_GUI.h
+..\obj\main.o: ..\EMWIN\sample.h
