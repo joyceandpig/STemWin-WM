@@ -72,33 +72,11 @@ void main_ui(void)
 	GUI_DrawRoundedFrame(2,2,180,20,5,2);
 }
 
-void _Draw_WM(void)
-{
-	GUI_SetBkColor(GUI_BLACK);
-	WM_SetCreateFlags(WM_CF_MEMDEV);
-//	WM_EnableMemdev(WM_HBKWIN);
-//	while(1)
-	{
-		_DemoSetDesktopColor();
-		_DemoCreateWindow();
-		_DemoCreateWindowAsChild();
-		_DemoInvalidateWindow();
-		_DemoBringToTop();
-		_DemoBringToBottom();
-		_DemoMoveTo();
-		_DemoMoveWindow();
-		_DemoHideAndShowWindowParent();
-		_DemoHideAndShowWindowChild();
-		_DemoClipWindowChild();
-		_DemoResizeWindow();
-		_DemoSetDesktopWindowCallback();
-		_DemoDeleteWindow();
-	}
-}
+
 int main(void)
 {
 	BSP_Init();
-		
+	
 	OSInit();
 	OSTaskCreate(start_task,(void *)0,(OS_STK *)&START_TASK_STK[START_STK_SIZE-1],START_TASK_PRIO);//创建起始任务
 	OSStart();
@@ -110,9 +88,9 @@ void start_task(void *pdata)
 	
 	OS_ENTER_CRITICAL();
 	OSTaskCreate(emwin_demo_task,(void *)0,&EMWIN_TASK_STK[EMWIN_STK_SIZE-1],EMWIN_DEMO_TASK_PRIO);
-//	OSTaskCreate(touch_task,(void *)0,&TOUCH_TASK_STK[TOUCH_STK_SIZE-1],TOUCH_TASK_PRIO);
-//	OSTaskCreate(led_task,(void *)0,(OS_STK*)&LED_TASK_STK[LED_STK_SIZE-1],LED_TASK_PRIO);
-	OSTaskSuspend(START_TASK_PRIO);	//挂起起始任务.
+	OSTaskCreate(touch_task,(void *)0,&TOUCH_TASK_STK[TOUCH_STK_SIZE-1],TOUCH_TASK_PRIO);
+	OSTaskCreate(led_task,(void *)0,(OS_STK*)&LED_TASK_STK[LED_STK_SIZE-1],LED_TASK_PRIO);
+	OSTaskSuspend(START_TASK_PRIO);	//挂起起始任务. 
 	OS_EXIT_CRITICAL();
 }
 void led_task(void *pdata)
@@ -137,7 +115,7 @@ void emwin_demo_task(void *pdata)
 	while(1)
 	{
 //		GUIDEMO_Main();
-_Draw_WM();
+			_Draw_Clip_Window();
 		OSTimeDlyHMSM(0,0,0,1000);
 	}
 }
