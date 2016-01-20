@@ -637,6 +637,11 @@
               <FileType>1</FileType>
               <FilePath>..\EMWIN\sample.c</FilePath>
             </File>
+            <File>
+              <FileName>FramewinDLG.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\EMWIN\FramewinDLG.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

@@ -55,16 +55,32 @@
 *       _aDialogCreate
 */
 static const GUI_WIDGET_CREATE_INFO _aDialogCreate[] = {
-  { FRAMEWIN_CreateIndirect, "Framewin", ID_FRAMEWIN_0, 0, 0, 240, 320, 0, 0x64, 0 },
-  { LISTVIEW_CreateIndirect, "Listview", ID_LISTVIEW_0, 9, 19, 103, 122, 0, 0x0, 0 },
-  { EDIT_CreateIndirect, "Edit", ID_EDIT_0, 125, 21, 94, 119, 0, 0x64, 0 },
-  { BUTTON_CreateIndirect, "OK", ID_BUTTON_0, 18, 177, 80, 20, 0, 0x0, 0 },
-  { BUTTON_CreateIndirect, "CANCEL", ID_BUTTON_1, 130, 177, 80, 20, 0, 0x0, 0 },
-  { SCROLLBAR_CreateIndirect, "Scrollbar", ID_SCROLLBAR_0, 11, 235, 199, 20, 0, 0x0, 0 },
+  { FRAMEWIN_CreateIndirect, "Dialog", 0,30, 5,260, 230, FRAMEWIN_CF_MOVEABLE,0 },
+{ BUTTON_CreateIndirect, "OK", GUI_ID_OK, 100, 5, 60, 20 }, 
+{ BUTTON_CreateIndirect,"Cancel", GUI_ID_CANCEL,100, 30, 60, 20 },
+{ TEXT_CreateIndirect,"LT ext",0,10, 55, 48, 15, TEXT_CF_LEFT   },
+{ TEXT_CreateIndirect,"RText", 0, 10, 80, 48, 15, TEXT_CF_RIGHT },
+{ EDIT_CreateIndirect, NULL, GUI_ID_EDIT0, 60, 55, 100, 15, 0, 50 },
+{ EDIT_CreateIndirect, NULL, GUI_ID_EDIT1, 60, 80, 100, 15, 0, 50 },
+{ TEXT_CreateIndirect,"Hex", 0, 10, 100, 48, 15, TEXT_CF_RIGHT },
+{ EDIT_CreateIndirect, NULL, GUI_ID_EDIT2, 60, 100, 100, 15, 0, 6 },
+{ TEXT_CreateIndirect, "Bin", 0, 10, 120, 48, 15, TEXT_CF_RIGHT },
+{ EDIT_CreateIndirect, NULL, GUI_ID_EDIT3, 60, 120, 100, 15 },
+{ LISTBOX_CreateIndirect,   NULL,GUI_ID_LISTBOX0,10,   10,   60,   40 },
+{ CHECKBOX_CreateIndirect, NULL, GUI_ID_CHECK0, 10, 140,    0,    0 },
+{ CHECKBOX_CreateIndirect, NULL, GUI_ID_CHECK1, 30, 140,    0,    0 },
+{ SLIDER_CreateIndirect, NULL, GUI_ID_SLIDER0, 60, 140, 180,   20 },
+{ SLIDER_CreateIndirect, NULL, GUI_ID_SLIDER1, 10, 170, 230,   30 },
+{ DROPDOWN_CreateIndirect,NULL,   GUI_ID_DROPDOWN0, 170,   10,   80,   60, 0, 3   },
+{ DROPDOWN_CreateIndirect, NULL,GUI_ID_DROPDOWN1, 170,   60,   80,   60, 0, 3   }
   // USER START (Optionally insert additional widgets)
   // USER END
 };
-
+GUI_ConstString  _apListBox[] = {
+	"chinese",
+	"japan",
+	"english"
+};
 /*********************************************************************
 *
 *       Static code
@@ -80,138 +96,103 @@ static const GUI_WIDGET_CREATE_INFO _aDialogCreate[] = {
 *       _cbDialog
 */
 static void _cbDialog(WM_MESSAGE * pMsg) {
-  WM_HWIN hItem;
-  int     NCode;
-  int     Id;
+  WM_HWIN hEdit0;
+	WM_HWIN hEdit1;
+	WM_HWIN hEdit2;
+	WM_HWIN hEdit3;
+	WM_HWIN hListBox;
+	WM_HWIN hDropd0;
+	WM_HWIN hDropd1;
+	WM_HWIN hWin= pMsg->hWin;
+	int NCode,Id;
   // USER START (Optionally insert additional variables)
   // USER END
 
   switch (pMsg->MsgId) {
-  case WM_INIT_DIALOG:
     //
     // Initialization of 'Framewin'
     //
-    hItem = pMsg->hWin;
-    FRAMEWIN_SetText(hItem, "GUIBulider");
-    FRAMEWIN_SetTitleHeight(hItem, 20);
-    FRAMEWIN_SetFont(hItem, GUI_FONT_16_ASCII);
-    FRAMEWIN_SetTextColor(hItem, 0x000000FF);
-    FRAMEWIN_SetTextAlign(hItem, GUI_TA_HCENTER | GUI_TA_VCENTER);
-    //
-    // Initialization of 'Listview'
-    //
-    hItem = WM_GetDialogItem(pMsg->hWin, ID_LISTVIEW_0);
-    LISTVIEW_AddColumn(hItem, 30, "Col 0", GUI_TA_HCENTER | GUI_TA_VCENTER);
-    LISTVIEW_AddColumn(hItem, 30, "Col 1", GUI_TA_HCENTER | GUI_TA_VCENTER);
-    LISTVIEW_AddColumn(hItem, 30, "Col 2", GUI_TA_HCENTER | GUI_TA_VCENTER);
-    LISTVIEW_AddRow(hItem, NULL);
-    LISTVIEW_SetGridVis(hItem, 1);
-    //
-    // Initialization of 'Edit'
-    //
-    hItem = WM_GetDialogItem(pMsg->hWin, ID_EDIT_0);
-    EDIT_SetText(hItem, "123");
-    // USER START (Optionally insert additional code for further widget initialization)
-    // USER END
-    break;
-  case WM_NOTIFY_PARENT:
-    Id    = WM_GetId(pMsg->hWinSrc);
-    NCode = pMsg->Data.v;
-    switch(Id) {
-    case ID_LISTVIEW_0: // Notifications sent by 'Listview'
-      switch(NCode) {
-      case WM_NOTIFICATION_CLICKED:
-        // USER START (Optionally insert code for reacting on notification message)
-        // USER END
-        break;
-      case WM_NOTIFICATION_RELEASED:
-        // USER START (Optionally insert code for reacting on notification message)
-        // USER END
-        break;
-      case WM_NOTIFICATION_SEL_CHANGED:
-        // USER START (Optionally insert code for reacting on notification message)
-        // USER END
-        break;
-      // USER START (Optionally insert additional code for further notification handling)
-      // USER END
-      }
-      break;
-    case ID_EDIT_0: // Notifications sent by 'Edit'
-      switch(NCode) {
-      case WM_NOTIFICATION_CLICKED:
-        // USER START (Optionally insert code for reacting on notification message)
-        // USER END
-        break;
-      case WM_NOTIFICATION_RELEASED:
-        // USER START (Optionally insert code for reacting on notification message)
-        // USER END
-        break;
-      case WM_NOTIFICATION_VALUE_CHANGED:
-        // USER START (Optionally insert code for reacting on notification message)
-        // USER END
-        break;
-      // USER START (Optionally insert additional code for further notification handling)
-      // USER END
-      }
-      break;
-    case ID_BUTTON_0: // Notifications sent by 'Button'
-      switch(NCode) {
-      case WM_NOTIFICATION_CLICKED:
-        // USER START (Optionally insert code for reacting on notification message)
-        // USER END
-        break;
-      case WM_NOTIFICATION_RELEASED:
-        // USER START (Optionally insert code for reacting on notification message)
-        // USER END
-        break;
-      // USER START (Optionally insert additional code for further notification handling)
-      // USER END
-      }
-      break;
-    case ID_BUTTON_1: // Notifications sent by 'Button'
-      switch(NCode) {
-      case WM_NOTIFICATION_CLICKED:
-        // USER START (Optionally insert code for reacting on notification message)
-        // USER END
-        break;
-      case WM_NOTIFICATION_RELEASED:
-        // USER START (Optionally insert code for reacting on notification message)
-        // USER END
-        break;
-      // USER START (Optionally insert additional code for further notification handling)
-      // USER END
-      }
-      break;
-    case ID_SCROLLBAR_0: // Notifications sent by 'Scrollbar'
-      switch(NCode) {
-      case WM_NOTIFICATION_CLICKED:
-        // USER START (Optionally insert code for reacting on notification message)
-        // USER END
-        break;
-      case WM_NOTIFICATION_RELEASED:
-        // USER START (Optionally insert code for reacting on notification message)
-        // USER END
-        break;
-      case WM_NOTIFICATION_VALUE_CHANGED:
-        // USER START (Optionally insert code for reacting on notification message)
-        // USER END
-        break;
-      // USER START (Optionally insert additional code for further notification handling)
-      // USER END
-      }
-      break;
-    // USER START (Optionally insert additional code for further Ids)
-    // USER END
-    }
-    break;
+   case WM_INIT_DIALOG: //WM_INIT_DIALOG ??,????????
+				hEdit0    = WM_GetDialogItem(hWin, GUI_ID_EDIT0);
+				hEdit1    = WM_GetDialogItem(hWin, GUI_ID_EDIT1);
+				hEdit2    = WM_GetDialogItem(hWin, GUI_ID_EDIT2);
+				hEdit3    = WM_GetDialogItem(hWin, GUI_ID_EDIT3);
+				hListBox = WM_GetDialogItem(hWin, GUI_ID_LISTBOX0);
+				hDropd0   = WM_GetDialogItem(hWin, GUI_ID_DROPDOWN0);
+				hDropd1   = WM_GetDialogItem(hWin, GUI_ID_DROPDOWN1); 
+				EDIT_SetText(hEdit0, "EDIT widget 0");
+				EDIT_SetText(hEdit1, "EDIT widget 1");
+				EDIT_SetTextAlign(hEdit1, GUI_TA_LEFT);
+				EDIT_SetHexMode(hEdit2, 0x1234, 0, 0xffffff);
+				EDIT_SetBinMode(hEdit3, 0x1234, 0, 0xffff);
+				LISTBOX_SetText(hListBox, _apListBox);
+				WM_DisableWindow (WM_GetDialogItem(hWin, GUI_ID_CHECK1));
+				CHECKBOX_Check(   WM_GetDialogItem(hWin, GUI_ID_CHECK0));
+				CHECKBOX_Check(   WM_GetDialogItem(hWin, GUI_ID_CHECK1));
+				SLIDER_SetWidth( WM_GetDialogItem(hWin, GUI_ID_SLIDER0), 5);
+				SLIDER_SetValue( WM_GetDialogItem(hWin, GUI_ID_SLIDER1), 50);
+				SCROLLBAR_CreateAttached(hListBox, SCROLLBAR_CF_VERTICAL);
+				DROPDOWN_AddString(hDropd0, "Item 0");
+				DROPDOWN_AddString(hDropd0, "Item 1");
+				DROPDOWN_AddString(hDropd0, "Item 2");
+				DROPDOWN_AddString(hDropd1, "Item 0");
+				DROPDOWN_AddString(hDropd1, "Item 1");
+				DROPDOWN_AddString(hDropd1, "Item 2");
+				DROPDOWN_AddString(hDropd1, "Item 3");
+				DROPDOWN_AddString(hDropd1, "Item 4");
+				break;
   // USER START (Optionally insert additional message handling)
   // USER END
-  default:
-    WM_DefaultProc(pMsg);
-    break;
-  }
+		case WM_KEY:
+				switch (((WM_KEY_INFO*)(pMsg->Data.p))->Key) 
+				{
+					case GUI_KEY_ESCAPE:
+							GUI_EndDialog(hWin, 1);
+							break;
+					case GUI_KEY_ENTER:
+							GUI_EndDialog(hWin, 0);
+							break;
+				}
+				break;
+		case WM_NOTIFY_PARENT:                //(1)
+				Id= WM_GetId(pMsg->hWinSrc);     //????? ID ?  (2)
+				NCode = pMsg->Data.v;              //????      (3)
+				switch (NCode) 
+				{
+					case WM_NOTIFICATION_RELEASED:   //?????  (4)
+					if (Id == GUI_ID_OK)         //OK ??  (5)
+					{        
+//							GUI_EndDialog(hWin, 0);
+							GUI_SetColor(GUI_RED);
+						GUI_DrawRect(0,0,10,10);
+					}
+					if (Id == GUI_ID_CANCEL)      //CANCEL ??  (6)
+					{     
+//							GUI_EndDialog(hWin, 1);
+						GUI_SetColor(GUI_BLACK);
+						GUI_DrawRect(0,0,10,10);
+					}
+					break;
+					case WM_NOTIFICATION_SCROLLBAR_ADDED:
+						GUI_DrawRect(0,0,10,10);
+						break;
+				}
+				break;
+		default:
+		WM_DefaultProc(pMsg);
+	}
 }
-
+static void _cbBkcallback(WM_MESSAGE *pMsg)
+{
+	switch(pMsg->MsgId)
+	{
+		case WM_PAINT:
+			GUI_SetBkColor(GUI_BLACK);
+		GUI_Clear();break;
+		default:
+			WM_DefaultProc(pMsg);
+	}
+}
 /*********************************************************************
 *
 *       Public code
@@ -222,7 +203,6 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
 *
 *       CreateFramewin
 */
-WM_HWIN CreateFramewin(void);
 WM_HWIN CreateFramewin(void) {
   WM_HWIN hWin;
 	
@@ -240,8 +220,13 @@ WM_HWIN CreateFramewin(void) {
 	SLIDER_SetDefaultSkin(SLIDER_SKIN_FLEX);
 	SPINBOX_SetDefaultSkin(SPINBOX_SKIN_FLEX);
 	
-  hWin = GUI_CreateDialogBox(_aDialogCreate, GUI_COUNTOF(_aDialogCreate), _cbDialog, WM_HBKWIN, 0, 0);
+	WM_SetCallback(WM_HBKWIN,_cbBkcallback);
+  hWin = GUI_CreateDialogBox(_aDialogCreate, GUI_COUNTOF(_aDialogCreate), _cbDialog, WM_HBKWIN, 0, 0);//非阻塞模式
+	//若使用阻塞模式，则应使用GUI_ExecDialogBox()
+	
+	while(1){
 	GUI_Delay(50);
+	}
   return hWin;
 }
 
