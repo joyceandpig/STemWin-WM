@@ -643,7 +643,7 @@ I (D:\Program Files\MDK_5.11\ARM\ARMCC\include\stddef.h)(0x53463A44)
 I (..\EMWIN\STemWin\inc\SCROLLBAR.h)(0x55365A2F)
 I (..\EMWIN\STemWin\inc\DIALOG_Intern.h)(0x55365A2F)
 I (..\EMWIN\STemWin\inc\BUTTON.h)(0x55365A2F)
-F (..\EMWIN\FramewinDLG.c)(0x569F02DC)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork -I..\HARDWARE\LED -I..\SYSTEM\delay -I..\SYSTEM\sys -I..\SYSTEM\usart -I..\USER -I..\FWLIB\STM32F10x_FWLib\inc -I..\CORE -I..\HARDWARE\LCD -I..\HARDWARE\KEY -I..\MALLOC -I..\USMART -I..\EMWIN\STemWin\Config -I..\EMWIN\STemWin\inc -I..\EMWIN\Demo -I..\HARDWARE\24CXX -I..\HARDWARE\IIC -I..\HARDWARE\TOUCH -I..\UCOSII\CONFIG -I..\UCOSII\CORE -I..\UCOSII\PORT -I..\EMWIN\STemWin\OS -I..\HARDWARE\BITMAP -I..\EMWIN-I "D:\Program Files\MDK_5.11\ARM\RV31\INC"-I "D:\Program Files\MDK_5.11\ARM\PACK\ARM\CMSIS\4.1.0\CMSIS\Include"-I "D:\Program Files\MDK_5.11\ARM\Inc\ST\STM32F10x"-DSTM32F10X_HD -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER-o ..\obj\framewindlg.o --omf_browse ..\obj\framewindlg.crf --depend ..\obj\framewindlg.d)
+F (..\EMWIN\FramewinDLG.c)(0x56A04E25)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork -I..\HARDWARE\LED -I..\SYSTEM\delay -I..\SYSTEM\sys -I..\SYSTEM\usart -I..\USER -I..\FWLIB\STM32F10x_FWLib\inc -I..\CORE -I..\HARDWARE\LCD -I..\HARDWARE\KEY -I..\MALLOC -I..\USMART -I..\EMWIN\STemWin\Config -I..\EMWIN\STemWin\inc -I..\EMWIN\Demo -I..\HARDWARE\24CXX -I..\HARDWARE\IIC -I..\HARDWARE\TOUCH -I..\UCOSII\CONFIG -I..\UCOSII\CORE -I..\UCOSII\PORT -I..\EMWIN\STemWin\OS -I..\HARDWARE\BITMAP -I..\EMWIN-I "D:\Program Files\MDK_5.11\ARM\RV31\INC"-I "D:\Program Files\MDK_5.11\ARM\PACK\ARM\CMSIS\4.1.0\CMSIS\Include"-I "D:\Program Files\MDK_5.11\ARM\Inc\ST\STM32F10x"-DSTM32F10X_HD -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER-o ..\obj\framewindlg.o --omf_browse ..\obj\framewindlg.crf --depend ..\obj\framewindlg.d)
 I (..\EMWIN\STemWin\inc\DIALOG.h)(0x55365A2F)
 I (..\EMWIN\STemWin\inc\WM.h)(0x55365A2F)
 I (..\EMWIN\STemWin\inc\GUI_ConfDefaults.h)(0x55365A2F)
@@ -687,6 +687,17 @@ I (..\EMWIN\STemWin\inc\SPINBOX.h)(0x55365A2F)
 I (..\EMWIN\STemWin\inc\TEXT.h)(0x55365A2F)
 I (..\EMWIN\STemWin\inc\TREEVIEW.h)(0x55365A2F)
 I (..\EMWIN\STemWin\inc\KNOB.h)(0x55365A2F)
+I (..\SYSTEM\sys\sys.h)(0x5681FB90)
+I (..\USER\stm32f10x.h)(0x4D783CB4)
+I (..\CORE\core_cm3.h)(0x4D523B58)
+I (D:\Program Files\MDK_5.11\ARM\ARMCC\include\stdint.h)(0x53463A44)
+I (..\USER\system_stm32f10x.h)(0x4D783CAA)
+I (..\USER\stm32f10x_conf.h)(0x53312F78)
+I (..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_gpio.h)(0x50515FBA)
+I (..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_rcc.h)(0x4D783BB4)
+I (..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_tim.h)(0x4D783BB4)
+I (..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_usart.h)(0x504F415E)
+I (..\FWLIB\STM32F10x_FWLib\inc\misc.h)(0x4D783BB4)
 F (..\EMWIN\STemWin\Lib\STemWin526_CM3_OS_Keil.lib)(0x548F1219)()
 F (..\UCOSII\CONFIG\includes.h)(0x5290AD76)()
 F (..\UCOSII\CONFIG\os_cfg.h)(0x5682596C)()

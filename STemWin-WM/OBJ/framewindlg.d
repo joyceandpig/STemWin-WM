@@ -44,3 +44,15 @@
 ..\obj\framewindlg.o: ..\EMWIN\STemWin\inc\TEXT.h
 ..\obj\framewindlg.o: ..\EMWIN\STemWin\inc\TREEVIEW.h
 ..\obj\framewindlg.o: ..\EMWIN\STemWin\inc\KNOB.h
+..\obj\framewindlg.o: ..\SYSTEM\sys\sys.h
+..\obj\framewindlg.o: ..\USER\stm32f10x.h
+..\obj\framewindlg.o: ..\CORE\core_cm3.h
+..\obj\framewindlg.o: D:\Program Files\MDK_5.11\ARM\ARMCC\bin\..\include\stdint.h
+..\obj\framewindlg.o: ..\USER\system_stm32f10x.h
+..\obj\framewindlg.o: ..\USER\stm32f10x_conf.h
+..\obj\framewindlg.o: ..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_gpio.h
+..\obj\framewindlg.o: ..\USER\stm32f10x.h
+..\obj\framewindlg.o: ..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_rcc.h
+..\obj\framewindlg.o: ..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_tim.h
+..\obj\framewindlg.o: ..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_usart.h
+..\obj\framewindlg.o: ..\FWLIB\STM32F10x_FWLib\inc\misc.h

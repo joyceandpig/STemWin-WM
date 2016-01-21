@@ -22,6 +22,7 @@
 // USER END
 
 #include "DIALOG.h"
+#include "sys.h"
 
 /*********************************************************************
 *
@@ -30,11 +31,8 @@
 **********************************************************************
 */
 #define ID_FRAMEWIN_0     (GUI_ID_USER + 0x01)
-#define ID_LISTVIEW_0     (GUI_ID_USER + 0x02)
-#define ID_EDIT_0     (GUI_ID_USER + 0x04)
 #define ID_BUTTON_0     (GUI_ID_USER + 0x05)
 #define ID_BUTTON_1     (GUI_ID_USER + 0x06)
-#define ID_SCROLLBAR_0     (GUI_ID_USER + 0x07)
 
 
 // USER START (Optionally insert additional defines)
@@ -58,21 +56,8 @@ static const GUI_WIDGET_CREATE_INFO _aDialogCreate[] = {
   { FRAMEWIN_CreateIndirect, "Dialog", 0,30, 5,260, 230, FRAMEWIN_CF_MOVEABLE,0 },
 { BUTTON_CreateIndirect, "OK", GUI_ID_OK, 100, 5, 60, 20 }, 
 { BUTTON_CreateIndirect,"Cancel", GUI_ID_CANCEL,100, 30, 60, 20 },
-{ TEXT_CreateIndirect,"LT ext",0,10, 55, 48, 15, TEXT_CF_LEFT   },
-{ TEXT_CreateIndirect,"RText", 0, 10, 80, 48, 15, TEXT_CF_RIGHT },
-{ EDIT_CreateIndirect, NULL, GUI_ID_EDIT0, 60, 55, 100, 15, 0, 50 },
-{ EDIT_CreateIndirect, NULL, GUI_ID_EDIT1, 60, 80, 100, 15, 0, 50 },
-{ TEXT_CreateIndirect,"Hex", 0, 10, 100, 48, 15, TEXT_CF_RIGHT },
-{ EDIT_CreateIndirect, NULL, GUI_ID_EDIT2, 60, 100, 100, 15, 0, 6 },
-{ TEXT_CreateIndirect, "Bin", 0, 10, 120, 48, 15, TEXT_CF_RIGHT },
-{ EDIT_CreateIndirect, NULL, GUI_ID_EDIT3, 60, 120, 100, 15 },
-{ LISTBOX_CreateIndirect,   NULL,GUI_ID_LISTBOX0,10,   10,   60,   40 },
-{ CHECKBOX_CreateIndirect, NULL, GUI_ID_CHECK0, 10, 140,    0,    0 },
-{ CHECKBOX_CreateIndirect, NULL, GUI_ID_CHECK1, 30, 140,    0,    0 },
-{ SLIDER_CreateIndirect, NULL, GUI_ID_SLIDER0, 60, 140, 180,   20 },
-{ SLIDER_CreateIndirect, NULL, GUI_ID_SLIDER1, 10, 170, 230,   30 },
-{ DROPDOWN_CreateIndirect,NULL,   GUI_ID_DROPDOWN0, 170,   10,   80,   60, 0, 3   },
-{ DROPDOWN_CreateIndirect, NULL,GUI_ID_DROPDOWN1, 170,   60,   80,   60, 0, 3   }
+{ TEXT_CreateIndirect,"LED1",0,10, 55, 48, 15, TEXT_CF_LEFT   },
+{ TEXT_CreateIndirect,"LED2", 0, 10, 80, 48, 15, TEXT_CF_RIGHT },
   // USER START (Optionally insert additional widgets)
   // USER END
 };
@@ -96,15 +81,11 @@ GUI_ConstString  _apListBox[] = {
 *       _cbDialog
 */
 static void _cbDialog(WM_MESSAGE * pMsg) {
-  WM_HWIN hEdit0;
-	WM_HWIN hEdit1;
-	WM_HWIN hEdit2;
-	WM_HWIN hEdit3;
-	WM_HWIN hListBox;
-	WM_HWIN hDropd0;
-	WM_HWIN hDropd1;
+
 	WM_HWIN hWin= pMsg->hWin;
+	WM_HWIN htem;
 	int NCode,Id;
+	static u8 flag1 = 0,flag2 = 0;
   // USER START (Optionally insert additional variables)
   // USER END
 
@@ -113,69 +94,53 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
     // Initialization of 'Framewin'
     //
    case WM_INIT_DIALOG: //WM_INIT_DIALOG ??,????????
-				hEdit0    = WM_GetDialogItem(hWin, GUI_ID_EDIT0);
-				hEdit1    = WM_GetDialogItem(hWin, GUI_ID_EDIT1);
-				hEdit2    = WM_GetDialogItem(hWin, GUI_ID_EDIT2);
-				hEdit3    = WM_GetDialogItem(hWin, GUI_ID_EDIT3);
-				hListBox = WM_GetDialogItem(hWin, GUI_ID_LISTBOX0);
-				hDropd0   = WM_GetDialogItem(hWin, GUI_ID_DROPDOWN0);
-				hDropd1   = WM_GetDialogItem(hWin, GUI_ID_DROPDOWN1); 
-				EDIT_SetText(hEdit0, "EDIT widget 0");
-				EDIT_SetText(hEdit1, "EDIT widget 1");
-				EDIT_SetTextAlign(hEdit1, GUI_TA_LEFT);
-				EDIT_SetHexMode(hEdit2, 0x1234, 0, 0xffffff);
-				EDIT_SetBinMode(hEdit3, 0x1234, 0, 0xffff);
-				LISTBOX_SetText(hListBox, _apListBox);
-				WM_DisableWindow (WM_GetDialogItem(hWin, GUI_ID_CHECK1));
-				CHECKBOX_Check(   WM_GetDialogItem(hWin, GUI_ID_CHECK0));
-				CHECKBOX_Check(   WM_GetDialogItem(hWin, GUI_ID_CHECK1));
-				SLIDER_SetWidth( WM_GetDialogItem(hWin, GUI_ID_SLIDER0), 5);
-				SLIDER_SetValue( WM_GetDialogItem(hWin, GUI_ID_SLIDER1), 50);
-				SCROLLBAR_CreateAttached(hListBox, SCROLLBAR_CF_VERTICAL);
-				DROPDOWN_AddString(hDropd0, "Item 0");
-				DROPDOWN_AddString(hDropd0, "Item 1");
-				DROPDOWN_AddString(hDropd0, "Item 2");
-				DROPDOWN_AddString(hDropd1, "Item 0");
-				DROPDOWN_AddString(hDropd1, "Item 1");
-				DROPDOWN_AddString(hDropd1, "Item 2");
-				DROPDOWN_AddString(hDropd1, "Item 3");
-				DROPDOWN_AddString(hDropd1, "Item 4");
+				htem=WM_GetDialogItem(hWin,GUI_ID_OK);
+				BUTTON_SetBkColor(htem,BUTTON_CI_UNPRESSED,GUI_BLACK);
+				BUTTON_SetTextAlign(htem,GUI_TA_HCENTER);
+				BUTTON_SetText(htem,"LED1_OFF");
+	 
+	 			htem=WM_GetDialogItem(hWin,GUI_ID_CANCEL);
+				BUTTON_SetBkColor(htem,BUTTON_CI_UNPRESSED,GUI_BLACK);
+				BUTTON_SetTextAlign(htem,GUI_TA_HCENTER);
+				BUTTON_SetText(htem,"LED2_OFF");
+
+
 				break;
   // USER START (Optionally insert additional message handling)
   // USER END
-		case WM_KEY:
-				switch (((WM_KEY_INFO*)(pMsg->Data.p))->Key) 
-				{
-					case GUI_KEY_ESCAPE:
-							GUI_EndDialog(hWin, 1);
-							break;
-					case GUI_KEY_ENTER:
-							GUI_EndDialog(hWin, 0);
-							break;
-				}
-				break;
 		case WM_NOTIFY_PARENT:                //(1)
 				Id= WM_GetId(pMsg->hWinSrc);     //????? ID ?  (2)
 				NCode = pMsg->Data.v;              //????      (3)
 				switch (NCode) 
 				{
+					case WM_NOTIFICATION_CLICKED:
+						if(Id == GUI_ID_OK){
+							htem=WM_GetDialogItem(hWin,GUI_ID_OK);
+				BUTTON_SetBkColor(htem,BUTTON_CI_UNPRESSED,GUI_GREEN);
+				BUTTON_SetTextAlign(htem,GUI_TA_HCENTER);
+				BUTTON_SetText(htem,"LED2_ON");
+						}else{
+							htem=WM_GetDialogItem(hWin,GUI_ID_CANCEL);
+				BUTTON_SetBkColor(htem,BUTTON_CI_UNPRESSED,GUI_GREEN);
+				BUTTON_SetTextAlign(htem,GUI_TA_HCENTER);
+				BUTTON_SetText(htem,"LED2_ON");
+						}
 					case WM_NOTIFICATION_RELEASED:   //?????  (4)
 					if (Id == GUI_ID_OK)         //OK ??  (5)
 					{        
-//							GUI_EndDialog(hWin, 0);
-							GUI_SetColor(GUI_RED);
-						GUI_DrawRect(0,0,10,10);
+						htem=WM_GetDialogItem(hWin,GUI_ID_OK);
+						flag1 = ~flag1;
+						PAout(8)=flag1?0:1;
+						flag1?BUTTON_SetText(htem,"LED1_ON"):BUTTON_SetText(htem,"LED1_OFF");
 					}
 					if (Id == GUI_ID_CANCEL)      //CANCEL ??  (6)
 					{     
-							GUI_EndDialog(hWin, 1);
-						GUI_SetColor(GUI_BLACK);
-						GUI_DrawRect(0,0,10,10);
+						htem=WM_GetDialogItem(hWin,GUI_ID_CANCEL);
+						flag2 = ~flag2;
+						PDout(2)=flag2?0:1;
+						flag2?BUTTON_SetText(htem,"LED2_ON"):BUTTON_SetText(htem,"LED2_OFF");
 					}
 					break;
-					case WM_NOTIFICATION_VALUE_CHANGED:
-						GUI_DrawRect(0,0,10,10);
-						break;
 				}
 				break;
 		default:
@@ -207,18 +172,12 @@ WM_HWIN CreateFramewin(void) {
   WM_HWIN hWin;
 	PROGBAR_Handle hprogbar;
 	//»»·ô
-	BUTTON_SetDefaultSkin(BUTTON_SKIN_FLEX); 
-	CHECKBOX_SetDefaultSkin(CHECKBOX_SKIN_FLEX);
-	DROPDOWN_SetDefaultSkin(DROPDOWN_SKIN_FLEX);
+	BUTTON_SetDefaultSkin(BUTTON_SKIN_FLEX);
 	FRAMEWIN_SetDefaultSkin(FRAMEWIN_SKIN_FLEX);
-	HEADER_SetDefaultSkin(HEADER_SKIN_FLEX);
-	MENU_SetDefaultSkin(MENU_SKIN_FLEX);
-	MULTIPAGE_SetDefaultSkin(MULTIPAGE_SKIN_FLEX);
+//	HEADER_SetDefaultSkin(HEADER_SKIN_FLEX);
+//	MENU_SetDefaultSkin(MENU_SKIN_FLEX);
+//	MULTIPAGE_SetDefaultSkin(MULTIPAGE_SKIN_FLEX);
 	PROGBAR_SetDefaultSkin(PROGBAR_SKIN_FLEX);
-	RADIO_SetDefaultSkin(RADIO_SKIN_FLEX);
-	SCROLLBAR_SetDefaultSkin(SCROLLBAR_SKIN_FLEX);
-	SLIDER_SetDefaultSkin(SLIDER_SKIN_FLEX);
-	SPINBOX_SetDefaultSkin(SPINBOX_SKIN_FLEX);
 
 	hprogbar = PROGBAR_Create(0,0,100,10,WM_CF_SHOW);
 	PROGBAR_SetBarColor(hprogbar,1,GUI_GREEN);
