@@ -168,12 +168,12 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
 					}
 					if (Id == GUI_ID_CANCEL)      //CANCEL ??  (6)
 					{     
-//							GUI_EndDialog(hWin, 1);
+							GUI_EndDialog(hWin, 1);
 						GUI_SetColor(GUI_BLACK);
 						GUI_DrawRect(0,0,10,10);
 					}
 					break;
-					case WM_NOTIFICATION_SCROLLBAR_ADDED:
+					case WM_NOTIFICATION_VALUE_CHANGED:
 						GUI_DrawRect(0,0,10,10);
 						break;
 				}
@@ -205,7 +205,7 @@ static void _cbBkcallback(WM_MESSAGE *pMsg)
 */
 WM_HWIN CreateFramewin(void) {
   WM_HWIN hWin;
-	
+	PROGBAR_Handle hprogbar;
 	//换肤
 	BUTTON_SetDefaultSkin(BUTTON_SKIN_FLEX); 
 	CHECKBOX_SetDefaultSkin(CHECKBOX_SKIN_FLEX);
@@ -219,10 +219,16 @@ WM_HWIN CreateFramewin(void) {
 	SCROLLBAR_SetDefaultSkin(SCROLLBAR_SKIN_FLEX);
 	SLIDER_SetDefaultSkin(SLIDER_SKIN_FLEX);
 	SPINBOX_SetDefaultSkin(SPINBOX_SKIN_FLEX);
+
+	hprogbar = PROGBAR_Create(0,0,100,10,WM_CF_SHOW);
+	PROGBAR_SetBarColor(hprogbar,1,GUI_GREEN);
+	PROGBAR_SetBarColor(hprogbar,0,GUI_RED);
+	PROGBAR_SetValue(hprogbar,70);
 	
 	WM_SetCallback(WM_HBKWIN,_cbBkcallback);
   hWin = GUI_CreateDialogBox(_aDialogCreate, GUI_COUNTOF(_aDialogCreate), _cbDialog, WM_HBKWIN, 0, 0);//非阻塞模式
 	//若使用阻塞模式，则应使用GUI_ExecDialogBox()
+	
 	
 	while(1){
 	GUI_Delay(50);
