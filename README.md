@@ -1,5 +1,3 @@
 # STemWin-WM
 contain follow content:
-clip window and use frame and button function
-tips:when we change tools's skin by set defaultskin,It is cannot take effect when want change tools's color in the program
-
+create a frame obtain text, checkbox and botton by use GUIBuilder. change checkbox value and event, add a botton event to end the dialog.

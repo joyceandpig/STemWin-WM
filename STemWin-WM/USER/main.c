@@ -113,7 +113,8 @@ void touch_task(void *pdata)
 void emwin_demo_task(void *pdata)
 {
 	
-	CreateFramewin();
+	CreateCheck_Box_sample();
+//	CreateFramewin();
 	while(1)
 	{
 //		GUIDEMO_Main();

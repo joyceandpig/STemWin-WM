@@ -22,7 +22,7 @@
 // USER END
 
 #include "DIALOG.h"
-#include "sys.h"
+#include "GUI.h"
 
 /*********************************************************************
 *
@@ -30,9 +30,19 @@
 *
 **********************************************************************
 */
-#define ID_FRAMEWIN_0     (GUI_ID_USER + 0x01)
-#define ID_BUTTON_0     (GUI_ID_USER + 0x05)
-#define ID_BUTTON_1     (GUI_ID_USER + 0x06)
+#define ID_FRAMEWIN_0     (GUI_ID_USER + 0x00)
+#define ID_CHECKBOX_0     (GUI_ID_USER + 0x01)
+#define ID_CHECKBOX_1     (GUI_ID_USER + 0x02)
+#define ID_CHECKBOX_2     (GUI_ID_USER + 0x03)
+#define ID_CHECKBOX_3     (GUI_ID_USER + 0x04)
+#define ID_CHECKBOX_4     (GUI_ID_USER + 0x05)
+#define ID_CHECKBOX_5     (GUI_ID_USER + 0x06)
+#define ID_CHECKBOX_6     (GUI_ID_USER + 0x07)
+#define ID_CHECKBOX_7     (GUI_ID_USER + 0x08)
+#define ID_BUTTON_0     (GUI_ID_USER + 0x09)
+#define ID_BUTTON_1     (GUI_ID_USER + 0x0A)
+#define ID_TEXT_0     (GUI_ID_USER + 0x0B)
+#define ID_TEXT_1     (GUI_ID_USER + 0x0C)
 
 
 // USER START (Optionally insert additional defines)
@@ -53,19 +63,23 @@
 *       _aDialogCreate
 */
 static const GUI_WIDGET_CREATE_INFO _aDialogCreate[] = {
-  { FRAMEWIN_CreateIndirect, "Dialog", 0,30, 5,260, 230, FRAMEWIN_CF_MOVEABLE,0 },
-{ BUTTON_CreateIndirect, "OK", GUI_ID_OK, 100, 5, 60, 20 }, 
-{ BUTTON_CreateIndirect,"Cancel", GUI_ID_CANCEL,100, 30, 60, 20 },
-{ TEXT_CreateIndirect,"LED1",0,10, 55, 48, 15, TEXT_CF_LEFT   },
-{ TEXT_CreateIndirect,"LED2", 0, 10, 80, 48, 15, TEXT_CF_RIGHT },
+  { FRAMEWIN_CreateIndirect, "Check Box sample", ID_FRAMEWIN_0, 3, 0, 240, 320, 0, 0x0, 0 },
+  { CHECKBOX_CreateIndirect, "Checkbox11", ID_CHECKBOX_0, 11, 33, 80, 20, 0, 0x0, 0 },
+  { CHECKBOX_CreateIndirect, "Checkbox12", ID_CHECKBOX_1, 113, 37, 80, 20, 0, 0x0, 0 },
+  { CHECKBOX_CreateIndirect, "Checkbox21", ID_CHECKBOX_2, 16, 81, 80, 20, 0, 0x0, 0 },
+  { CHECKBOX_CreateIndirect, "Checkbox31", ID_CHECKBOX_3, 21, 124, 80, 20, 0, 0x0, 0 },
+  { CHECKBOX_CreateIndirect, "Checkbox41", ID_CHECKBOX_4, 21, 171, 80, 20, 0, 0x0, 0 },
+  { CHECKBOX_CreateIndirect, "Checkbox22", ID_CHECKBOX_5, 112, 82, 80, 20, 0, 0x0, 0 },
+  { CHECKBOX_CreateIndirect, "Checkbox32", ID_CHECKBOX_6, 118, 121, 80, 20, 0, 0x0, 0 },
+  { CHECKBOX_CreateIndirect, "Checkbox42", ID_CHECKBOX_7, 116, 169, 80, 20, 0, 0x0, 0 },
+  { BUTTON_CreateIndirect, "OK", ID_BUTTON_0, 14, 241, 80, 20, 0, 0x0, 0 },
+  { BUTTON_CreateIndirect, "Cancel", ID_BUTTON_1, 137, 247, 80, 20, 0, 0x0, 0 },
+  { TEXT_CreateIndirect, "Enabled:", ID_TEXT_0, 11, 10, 80, 20, 0, 0x0, 0 },
+  { TEXT_CreateIndirect, "Disabled:", ID_TEXT_1, 104, 10, 80, 20, 0, 0x0, 0 },
   // USER START (Optionally insert additional widgets)
   // USER END
 };
-GUI_ConstString  _apListBox[] = {
-	"chinese",
-	"japan",
-	"english"
-};
+
 /*********************************************************************
 *
 *       Static code
@@ -81,71 +95,248 @@ GUI_ConstString  _apListBox[] = {
 *       _cbDialog
 */
 static void _cbDialog(WM_MESSAGE * pMsg) {
-
-	WM_HWIN hWin= pMsg->hWin;
-	WM_HWIN htem;
-	int NCode,Id;
-	static u8 flag1 = 0,flag2 = 0;
+  WM_HWIN hItem;
+  int     NCode;
+  int     Id;
   // USER START (Optionally insert additional variables)
   // USER END
 
   switch (pMsg->MsgId) {
+  case WM_INIT_DIALOG:
     //
-    // Initialization of 'Framewin'
+    // Initialization of 'Check Box sample'
     //
-   case WM_INIT_DIALOG: //WM_INIT_DIALOG ??,????????
-				htem=WM_GetDialogItem(hWin,GUI_ID_OK);
-				BUTTON_SetBkColor(htem,BUTTON_CI_UNPRESSED,GUI_BLACK);
-				BUTTON_SetTextAlign(htem,GUI_TA_HCENTER);
-				BUTTON_SetText(htem,"LED1_OFF");
-	 
-	 			htem=WM_GetDialogItem(hWin,GUI_ID_CANCEL);
-				BUTTON_SetBkColor(htem,BUTTON_CI_UNPRESSED,GUI_BLACK);
-				BUTTON_SetTextAlign(htem,GUI_TA_HCENTER);
-				BUTTON_SetText(htem,"LED2_OFF");
+    hItem = pMsg->hWin;
+    SCROLLBAR_CreateAttached(hItem, 0);
+    SCROLLBAR_CreateAttached(hItem, SCROLLBAR_CF_VERTICAL);
+    FRAMEWIN_SetTextColor(hItem, GUI_YELLOW);
+    //
+    // Initialization of 'Checkbox11'
+    //
+    hItem = WM_GetDialogItem(pMsg->hWin, ID_CHECKBOX_0);
+    CHECKBOX_SetText(hItem, "Default");
+    //
+    // Initialization of 'Checkbox12'
+    //
+    hItem = WM_GetDialogItem(pMsg->hWin, ID_CHECKBOX_1);
+    CHECKBOX_SetText(hItem, "Default");
+    //
+    // Initialization of 'Checkbox21'
+    //
+    hItem = WM_GetDialogItem(pMsg->hWin, ID_CHECKBOX_2);
+    CHECKBOX_SetText(hItem, "3 States");
+    //
+    // Initialization of 'Checkbox31'
+    //
+    hItem = WM_GetDialogItem(pMsg->hWin, ID_CHECKBOX_3);
+    CHECKBOX_SetText(hItem, "Box XL");
+    //
+    // Initialization of 'Checkbox41'
+    //
+    hItem = WM_GetDialogItem(pMsg->hWin, ID_CHECKBOX_4);
+    CHECKBOX_SetText(hItem, "Box XXL");
+    //
+    // Initialization of 'Checkbox22'
+    //
+    hItem = WM_GetDialogItem(pMsg->hWin, ID_CHECKBOX_5);
+    CHECKBOX_SetText(hItem, "3 States");
+    //
+    // Initialization of 'Checkbox32'
+    //
+    hItem = WM_GetDialogItem(pMsg->hWin, ID_CHECKBOX_6);
+    CHECKBOX_SetText(hItem, "BOX XL");
+    //
+    // Initialization of 'Checkbox42'
+    //
+    hItem = WM_GetDialogItem(pMsg->hWin, ID_CHECKBOX_7);
+    CHECKBOX_SetText(hItem, "Box XXL");
+    // USER START (Optionally insert additional code for further widget initialization)
+    // USER END
+    break;
+  case WM_NOTIFY_PARENT:
+    Id    = WM_GetId(pMsg->hWinSrc);
+    NCode = pMsg->Data.v;
+    switch(Id) {
+    case ID_CHECKBOX_0: // Notifications sent by 'Checkbox11'
+			hItem = WM_GetDialogItem(pMsg->hWin,ID_CHECKBOX_0);
+      switch(NCode) {
+      case WM_NOTIFICATION_CLICKED:
+        // USER START (Optionally insert code for reacting on notification message)
+        // USER END
+			CHECKBOX_SetTextColor(hItem,GUI_BLUE);
+        break;
+      case WM_NOTIFICATION_RELEASED:
+        // USER START (Optionally insert code for reacting on notification message)
+        // USER END
+			CHECKBOX_SetTextColor(hItem,GUI_RED);
+			CHECKBOX_SetNumStates(hItem,3);
+			CHECKBOX_SetState(hItem,2);
+			break;
+      case WM_NOTIFICATION_VALUE_CHANGED:
+        // USER START (Optionally insert code for reacting on notification message)
+        // USER END
+			CHECKBOX_SetTextColor(hItem,GUI_BLACK);
+        break;
+      // USER START (Optionally insert additional code for further notification handling)
+      // USER END
+      }
+      break;
+    case ID_CHECKBOX_1: // Notifications sent by 'Checkbox12'
+      switch(NCode) {
+      case WM_NOTIFICATION_CLICKED:
+        // USER START (Optionally insert code for reacting on notification message)
+        // USER END
+        break;
+      case WM_NOTIFICATION_RELEASED:
+        // USER START (Optionally insert code for reacting on notification message)
+        // USER END
+        break;
+      case WM_NOTIFICATION_VALUE_CHANGED:
+        // USER START (Optionally insert code for reacting on notification message)
+        // USER END
+        break;
+      // USER START (Optionally insert additional code for further notification handling)
+      // USER END
+      }
+      break;
+    case ID_CHECKBOX_2: // Notifications sent by 'Checkbox21'
+      switch(NCode) {
+      case WM_NOTIFICATION_CLICKED:
+        // USER START (Optionally insert code for reacting on notification message)
+        // USER END
+        break;
+      case WM_NOTIFICATION_RELEASED:
+        // USER START (Optionally insert code for reacting on notification message)
+        // USER END
+        break;
+      case WM_NOTIFICATION_VALUE_CHANGED:
+        // USER START (Optionally insert code for reacting on notification message)
+        // USER END
+        break;
+      // USER START (Optionally insert additional code for further notification handling)
+      // USER END
+      }
+      break;
+    case ID_CHECKBOX_3: // Notifications sent by 'Checkbox31'
+      switch(NCode) {
+      case WM_NOTIFICATION_CLICKED:
+        // USER START (Optionally insert code for reacting on notification message)
+        // USER END
+        break;
+      case WM_NOTIFICATION_RELEASED:
+        // USER START (Optionally insert code for reacting on notification message)
+        // USER END
+        break;
+      case WM_NOTIFICATION_VALUE_CHANGED:
+        // USER START (Optionally insert code for reacting on notification message)
+        // USER END
+        break;
+      // USER START (Optionally insert additional code for further notification handling)
+      // USER END
+      }
+      break;
+    case ID_CHECKBOX_4: // Notifications sent by 'Checkbox41'
+      switch(NCode) {
+      case WM_NOTIFICATION_CLICKED:
+        // USER START (Optionally insert code for reacting on notification message)
+        // USER END
+        break;
+      case WM_NOTIFICATION_RELEASED:
+        // USER START (Optionally insert code for reacting on notification message)
+        // USER END
+        break;
+      case WM_NOTIFICATION_VALUE_CHANGED:
+        // USER START (Optionally insert code for reacting on notification message)
+        // USER END
+        break;
+      // USER START (Optionally insert additional code for further notification handling)
+      // USER END
+      }
+      break;
+    case ID_CHECKBOX_5: // Notifications sent by 'Checkbox22'
+      switch(NCode) {
+      case WM_NOTIFICATION_CLICKED:
+        // USER START (Optionally insert code for reacting on notification message)
+        // USER END
+        break;
+      case WM_NOTIFICATION_RELEASED:
+        // USER START (Optionally insert code for reacting on notification message)
+        // USER END
+        break;
+      case WM_NOTIFICATION_VALUE_CHANGED:
+        // USER START (Optionally insert code for reacting on notification message)
+        // USER END
+        break;
+      // USER START (Optionally insert additional code for further notification handling)
+      // USER END
+      }
+      break;
+    case ID_CHECKBOX_6: // Notifications sent by 'Checkbox32'
+      switch(NCode) {
+      case WM_NOTIFICATION_CLICKED:
+        // USER START (Optionally insert code for reacting on notification message)
+        // USER END
+        break;
+      case WM_NOTIFICATION_RELEASED:
+        // USER START (Optionally insert code for reacting on notification message)
+        // USER END
+        break;
+      case WM_NOTIFICATION_VALUE_CHANGED:
+        // USER START (Optionally insert code for reacting on notification message)
+        // USER END
+        break;
+      // USER START (Optionally insert additional code for further notification handling)
+      // USER END
+      }
+      break;
+    case ID_CHECKBOX_7: // Notifications sent by 'Checkbox42'
+      switch(NCode) {
+      case WM_NOTIFICATION_CLICKED:
+        // USER START (Optionally insert code for reacting on notification message)
+        // USER END
+        break;
+      case WM_NOTIFICATION_RELEASED:
+        // USER START (Optionally insert code for reacting on notification message)
+        // USER END
+        break;
+      case WM_NOTIFICATION_VALUE_CHANGED:
+        // USER START (Optionally insert code for reacting on notification message)
+        // USER END
+        break;
+      // USER START (Optionally insert additional code for further notification handling)
+      // USER END
+      }
+      break;
+    case ID_BUTTON_0: // Notifications sent by 'OK'
+			
+      switch(NCode) {
 
-
-				break;
+      case WM_NOTIFICATION_RELEASED:
+				GUI_EndDialog(pMsg->hWin,0);
+        // USER START (Optionally insert code for reacting on notification message)
+        // USER END
+        break;
+      }
+      break;
+    case ID_BUTTON_1: // Notifications sent by 'Cancel'
+      switch(NCode) {
+      case WM_NOTIFICATION_RELEASED:
+				GUI_EndDialog(pMsg->hWin,1);
+        // USER START (Optionally insert code for reacting on notification message)
+        // USER END
+        break;
+      }
+      break;
+    // USER START (Optionally insert additional code for further Ids)
+    // USER END
+    }
+    break;
   // USER START (Optionally insert additional message handling)
   // USER END
-		case WM_NOTIFY_PARENT:                //(1)
-				Id= WM_GetId(pMsg->hWinSrc);     //????? ID ?  (2)
-				NCode = pMsg->Data.v;              //????      (3)
-				switch (NCode) 
-				{
-					case WM_NOTIFICATION_CLICKED:
-						if(Id == GUI_ID_OK){
-							htem=WM_GetDialogItem(hWin,GUI_ID_OK);
-				BUTTON_SetBkColor(htem,BUTTON_CI_UNPRESSED,GUI_GREEN);
-				BUTTON_SetTextAlign(htem,GUI_TA_HCENTER);
-				BUTTON_SetText(htem,"LED2_ON");
-						}else{
-							htem=WM_GetDialogItem(hWin,GUI_ID_CANCEL);
-				BUTTON_SetBkColor(htem,BUTTON_CI_UNPRESSED,GUI_GREEN);
-				BUTTON_SetTextAlign(htem,GUI_TA_HCENTER);
-				BUTTON_SetText(htem,"LED2_ON");
-						}
-					case WM_NOTIFICATION_RELEASED:   //?????  (4)
-					if (Id == GUI_ID_OK)         //OK ??  (5)
-					{        
-						htem=WM_GetDialogItem(hWin,GUI_ID_OK);
-						flag1 = ~flag1;
-						PAout(8)=flag1?0:1;
-						flag1?BUTTON_SetText(htem,"LED1_ON"):BUTTON_SetText(htem,"LED1_OFF");
-					}
-					if (Id == GUI_ID_CANCEL)      //CANCEL ??  (6)
-					{     
-						htem=WM_GetDialogItem(hWin,GUI_ID_CANCEL);
-						flag2 = ~flag2;
-						PDout(2)=flag2?0:1;
-						flag2?BUTTON_SetText(htem,"LED2_ON"):BUTTON_SetText(htem,"LED2_OFF");
-					}
-					break;
-				}
-				break;
-		default:
-		WM_DefaultProc(pMsg);
-	}
+  default:
+    WM_DefaultProc(pMsg);
+    break;
+  }
 }
 static void _cbBkcallback(WM_MESSAGE *pMsg)
 {
@@ -166,31 +357,16 @@ static void _cbBkcallback(WM_MESSAGE *pMsg)
 */
 /*********************************************************************
 *
-*       CreateFramewin
+*       CreateCheck Box sample
 */
-WM_HWIN CreateFramewin(void) {
-  WM_HWIN hWin;
-	PROGBAR_Handle hprogbar;
-	//换肤
-	BUTTON_SetDefaultSkin(BUTTON_SKIN_FLEX);
-	FRAMEWIN_SetDefaultSkin(FRAMEWIN_SKIN_FLEX);
-//	HEADER_SetDefaultSkin(HEADER_SKIN_FLEX);
-//	MENU_SetDefaultSkin(MENU_SKIN_FLEX);
-//	MULTIPAGE_SetDefaultSkin(MULTIPAGE_SKIN_FLEX);
-	PROGBAR_SetDefaultSkin(PROGBAR_SKIN_FLEX);
 
-	hprogbar = PROGBAR_Create(0,0,100,10,WM_CF_SHOW);
-	PROGBAR_SetBarColor(hprogbar,1,GUI_GREEN);
-	PROGBAR_SetBarColor(hprogbar,0,GUI_RED);
-	PROGBAR_SetValue(hprogbar,70);
-	
+WM_HWIN CreateCheck_Box_sample(void) {
+  WM_HWIN hWin;
+	GUI_CURSOR_Show();
 	WM_SetCallback(WM_HBKWIN,_cbBkcallback);
-  hWin = GUI_CreateDialogBox(_aDialogCreate, GUI_COUNTOF(_aDialogCreate), _cbDialog, WM_HBKWIN, 0, 0);//非阻塞模式
-	//若使用阻塞模式，则应使用GUI_ExecDialogBox()
-	
-	
 	while(1){
-	GUI_Delay(50);
+  hWin = GUI_CreateDialogBox(_aDialogCreate, GUI_COUNTOF(_aDialogCreate), _cbDialog, WM_HBKWIN, 0, 0);
+		GUI_Delay(2000);
 	}
   return hWin;
 }
